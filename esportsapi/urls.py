@@ -22,7 +22,7 @@ from news.models import News
 from django.conf.urls.static import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf import settings
-
+from news.admin import  myems_admin_site
 schema_view = get_schema_view(
     openapi.Info(
         title="API",
@@ -36,10 +36,13 @@ schema_view = get_schema_view(
     permission_classes=(permissions.AllowAny,),
 )
 
-admin.site.register(News)
+
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+  path('jet/', include('jet.urls', 'jet')),  # Django JET URLS
+  path('jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),
+  path('admin/', myems_admin_site.urls),
+
     path('auth/', include('authentication.urls')),
     path('social_auth/', include(('social_auth.urls', 'social_auth'),
                                  namespace="social_auth")),
